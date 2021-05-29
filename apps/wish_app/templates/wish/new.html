@@ -14,12 +14,33 @@
 	<body>
 		<div class="contenedor">
 			<header class="header">
-				<h1>Hello {{request.session.first_name}}!</h1>
-            	<p><a href="/logout" class='btn-out'>Logout</a> | <a href="/wish/new_wish" class='btn'>Make a wish!</a> | <a href="/wish/stats" class='btn'>View stats!</a> </p>
+				<h1>Make a new wish {{request.session.first_name}}!</h1>
+            	<p><a href="/wish/home" class='btn'>Home</a> | <a href="/logout" class='btn-out'>Logout</a></p>
 			</header>
 
 			<main class="contenido">
-				contenido
+				<h2 class='new_user'>Hello {{ user.first_name }} Make a wish!</h2>
+                <form class='big_form' action="/wish/new_wish" method='POST'>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                            <li {% if message.tags %} class="{{ message.tags }}" {% endif %} style="color: red;">{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        <label for="exampleFormControlInput1">I wish for:</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" name='item'>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Description:</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" name='desc'>
+                    </div>
+                    <input type="hidden" name='user_id' value="{{ user.id }}">
+                    <button type="submit" value='submit' class="btn">Add</button>
+                    <a class='btn-out' href="/wish/home">Cancel</a>
+                </form>
 			</main>
 			<footer class="footer">
 				Coding Dojo - Latam

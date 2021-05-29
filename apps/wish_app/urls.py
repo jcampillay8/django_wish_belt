@@ -6,11 +6,11 @@ urlpatterns = [
     # path('wish/authenticator', views.authenticator),
     path('wish/new', views.new),
     path('edit/<int:id>', views.edit),
-    path('stats', views.stats),
+    path('wish/stats', views.stats),
     path('logout', views.logout),
-    path('new_wish', views.new_wish),
+    path('wish/new_wish', views.new_wish),
     path('grant', views.grant),
     path('update/<int:id>', views.update),
     path('delete', views.delete),
-    path('like', views.like)
+    path('like', views.like),
 ]

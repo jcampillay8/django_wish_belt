@@ -12,21 +12,13 @@ def home(request):
     }
     return render(request, 'wish/home.html', context)
 
-# def id(request):
-#     return render(request, 'wish/id.html')
-
 def new(request):
     context = {
         'user': User.objects.get(id=request.session['id'])
     }
     return render(request, 'wish/new.html', context)
 
-def edit(request, id):
-    context = {
-        'user': User.objects.get(id=request.session['id']),
-        'wish': Wish.objects.get(id=id)
-    }
-    return render(request, 'wish/edit.html', context)
+
 
 def stats(request):
     context = {
@@ -36,8 +28,6 @@ def stats(request):
         'user_pending_wishes': User.objects.get(id=request.session['id']).wishes.count()
     }
     return render(request, 'wish/stats.html', context)
-
-
 
 
 def logout(request):
@@ -53,10 +43,10 @@ def new_wish(request):
         if len(errors):
             for key, value in errors.items():
                 messages.error(request, value)
-            return redirect('/new')
+            return redirect('/wish/new')
         else:
             Wish.objects.create(item=request.POST['item'], desc=request.POST['desc'], user=User.objects.get(id=request.POST['user_id']))
-            return redirect('/wishes')
+            return redirect('/wish/home')
     else:
         return redirect('/')
 
@@ -65,9 +55,16 @@ def grant(request):
         Granted_wish.objects.create(item=request.POST['wish_item'], user=User.objects.get(id=request.POST['user_id']), date_added=request.POST['wish_created'])
         wish = Wish.objects.get(id=request.POST['wish_id'])
         wish.delete()
-        return redirect('/wishes')
+        return redirect('/wish/home')
     else:
         return redirect('/')
+
+def edit(request, id):
+    context = {
+        'user': User.objects.get(id=request.session['id']),
+        'wish': Wish.objects.get(id=id)
+    }
+    return render(request, 'wish/edit.html', context)
 
 def update(request, id):
     if request.method == 'POST':
@@ -75,13 +72,13 @@ def update(request, id):
         if len(errors):
             for key, value in errors.items():
                 messages.error(request, value)
-                return redirect('/edit')
+                return redirect('/edit/id')
         else:
             wish = Wish.objects.get(id= id)
             wish.item = request.POST['item']
             wish.desc = request.POST['desc']
             wish.save()
-            return redirect('/wishes')    
+            return redirect('/wish/home')    
     else:
         return redirect('/')
 
@@ -91,18 +88,18 @@ def like(request):
         user = User.objects.get(id=request.POST['user_id'])
         if granted.user_id == user.id:
             messages.error(request, "Users may not like their own wishes.")
-            return redirect('/wishes')
+            return redirect('/wish/home')
         if len(granted.likes.filter(id=request.POST['user_id'])) > 0:
             messages.error(request, "You have already liked this wish.")
-            return redirect('/wishes')
+            return redirect('/wish/home')
         else:
             granted.likes.add(user)
-            return redirect('/wishes')
+            return redirect('/wish/home')
 
 def delete(request):
     if request.method == 'POST':
         wish = Wish.objects.get(id=request.POST['wish_id'])
         wish.delete()
-        return redirect('/wishes')
+        return redirect('/wish/home')
     else:
         return redirect('/')

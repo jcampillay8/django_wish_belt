@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Layout de Sitio Web con CSS GRID</title>
+		{% load static %}
+        <link rel="stylesheet" href="{% static 'css/grid_02.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto" rel="stylesheet">
+
+	</head>
+	<body>
+		<div class="contenedor">
+			<header class="header">
+				<h1>Hello {{ user.first_name }}! These are your stats!</h1>
+                
+            	<p><a href="/wish/home" class='btn'>Home</a> | <a href="/logout" class='btn-out'>Logout</a></p>
+			</header>
+
+			<main class="contenido">
+				<h1>Total wishes granted so far for all users: {{ granted_wishes }}</h1>
+                <h3>Your granted wishes: {{ user_granted_wishes }}</h3>
+                <h3>Your pending wishes: {{ user_pending_wishes }}</h3>
+                <h6><a id="back" href="/wish/home" class='btn-out'>Go back</a></h6>
+			</main>
+			<footer class="footer">
+				Coding Dojo - Latam
+			</footer>
+		</div>
+	</body>
+</html>

@@ -21,8 +21,8 @@
     width: 400px;
     margin: 0px auto;
     border-radius: 3px;
-    background: rgb(161, 20, 20);
-    color: #fff;
+    /* background: rgb(161, 20, 20); */
+    color: rgb(190, 14, 14);
     padding: 8px;
 }
 
