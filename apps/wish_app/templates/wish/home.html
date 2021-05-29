@@ -39,7 +39,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							{% for wish in wishes %}
+							{% for wish in wishes reversed %}
 							<tr>
 								<td >{{ wish.item }}</td>
 								<td>{{ wish.created_at }}</td>
@@ -71,7 +71,7 @@
 					<table class="table">
 						<thead>
 							<h3>Granted wishes</h3>
-							<tr>
+							<tr >
 								<th>Item</th>
 								<th>Wisher</th>
 								<th>Date added</th>
@@ -81,7 +81,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							{% for grant in granted_wishes %}
+							{% for grant in granted_wishes reversed %}
 							<tr>
 								<td>{{ grant.item }}</td>
 								<td>{{ grant.user.first_name }}</td>
